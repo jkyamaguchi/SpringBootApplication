@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>List of movies</title>
+	<th:block th:include="layout/header"></th:block>
+</head>
+<body>
+	<div class="container text-center">
+		<div th:if="${not #lists.isEmpty(movies)}">
+			<h2>All movies</h2>
+			<table class="table table-striped">
+				<tr>
+					<th>Id</th>
+					<th>Image path</th>
+					<th>Title</th>
+					<th>Release data</th>
+					<th>Vote average</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+				<tr th:each="movie: ${movies}">
+					<td th:text="${movie.id}"></td>
+					<td th:text="${movie.imagePath}"></td>
+					<td th:text="${movie.title}"></td>
+					<td th:text="${movie.releaseDate}"></td>
+					<td th:text="${movie.voteAverage}"></td>
+					<td><a th:href="${'/movies/update/'+ movie.id}" class="btn btn-default">Edit</a></td>
+					<td><a th:href="${'/movies/delete/'+ movie.id}" class="btn btn-danger">Delete</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

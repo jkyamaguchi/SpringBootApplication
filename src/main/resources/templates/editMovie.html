@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Edit movie details</title>
+	<th:block th:include="layout/header"></th:block> 
+</head>
+<body>
+	<div class="container">
+		<h2>Edit movie details</h2>
+		<!-- Table with movie's fields -->
+		<div>
+			<form class="form-horizontal" th:object="${movie}" th:action="@{/movies/store}" method="post"><!-- endpoint -->
+				<div class="form-group">
+					<div class="col-sm-10"> <!-- small-medium column with 10 size element -->
+						<input type="hidden" class="form-control" th:field="*{id}"/><!-- id field -->
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Image path:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{imagePath}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Title:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{title}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Release date:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{releaseDate}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Vote average:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{voteAverage}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
