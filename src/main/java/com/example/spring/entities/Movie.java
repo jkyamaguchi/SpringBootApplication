@@ -1,8 +1,11 @@
 package com.example.spring.entities;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,4 +32,7 @@ public class Movie {
 	private String releaseDate;
 	@JsonProperty("vote_average")
 	private Double voteAverage;
+	@OneToOne(cascade = CascadeType.ALL) //if Movie is deleted, then its child details is also deleted
+	@JoinColumn(name = "movie_details_id", referencedColumnName = "id")
+	private MovieDetails details;
 }

@@ -1,20 +1,18 @@
 package com.example.spring.entities;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
-@Entity
 @AllArgsConstructor
-@Getter
-@Setter
-public class Genre {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+public enum Genre {
+	ACTION("Action"),
+	COMEDY("Comedy"),
+	DRAMA("Drama"),
+	FANTASY("Fantasy"),
+	HORROR("Horror"),
+	MYSTERY("Mistery"),
+	ROMANCE("Romance"),
+	THRILLER("Thriller");
+	
+	@Getter
 	private String name;
 }

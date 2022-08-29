@@ -1,5 +1,6 @@
 package com.example.spring.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,22 @@ public class MovieController {
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
 	}
-
+	
+	/*
+	 * JSON methods require @ResponseBody
+	 */
 	@GetMapping(path="{id}")
 	@ResponseBody
 	public Optional<Movie> getMovie(@PathVariable(name="id") Long id) {
 		return movieService.getMovie(id);
 	}
 	
+	@GetMapping(path="/list")
+	@ResponseBody
+	public List<Movie> getMovies() {
+		return movieService.findAll();
+	}
+
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Movie saveMovie(@RequestBody Movie movieToSave) {
@@ -52,7 +62,11 @@ public class MovieController {
 	public void deleteMovie(@PathVariable(name="id") Long id) {
 		movieService.deleteMovie(id);
 	}
-	
+
+	/*
+	 * REST methods do not require @ResponseBody
+	 * Return a String redirect to html page in the template folder
+	 */
 	@GetMapping(path="/")
 	public String index() {
 		return "index";
@@ -70,7 +84,7 @@ public class MovieController {
 		return "redirect:/";
 	}
 	
-	@GetMapping(path="/list")
+	@GetMapping(path="/findAll")
 	public String getAllMovies(Model model) {
 		model.addAttribute("movies", movieService.findAll());
 		return "listMovies";
@@ -85,6 +99,6 @@ public class MovieController {
 	@GetMapping(path="/delete/{id}")
 	public String removeMovie(@PathVariable(value="id") Long id) {
 		movieService.deleteMovie(id);
-		return "redirect:/movies/list";
+		return "redirect:/movies/findAll";
 	}
 }
