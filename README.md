@@ -211,7 +211,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
   - `@RequestMapping` provides entry points for REST methods.
 
  ```Java
- @RestController
+@RestController
 @RequestMapping(path="/movies/")← it’s the root for following paths
 public class MovieController {
     
@@ -291,24 +291,25 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
   - In the Body, construct a JSON String for the object to be created - JSON (application/json) as Content-Type
   - Example: 
 
-  ```JSON
-  {
+```JSON
+{
     "imagePath":null,
     "title" : "Lagoa Azul",
     "releaseDate" : "1990",
     "voteAverage" : 4.3
 }
 ```
-    - It returns 200 in the header, if the object is recorded in the database.
-    - Check http://localhost:8081/h2/ and see a new line in the table
+It returns 200 in the header, if the object is recorded in the database.
+Check http://localhost:8081/h2/ and see a new line in the table
 
-- Test PUT
+- Test **PUT**
   - Open the H2 database, and choose an id.
   - Go to the REST Client, select PUT function and pass http://localhost:8081/api/movies/{id}
   - Example: http://localhost:8081/movies/1
   - Provide a new JSON String in the Body
   - Postman - select raw → choose JSON(application/json) as Content-Type
   - Example:
+
 ```JSON
 {
     "imagePath":null,
@@ -317,9 +318,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     "voteAverage" : 4.4
 }
 ```
-    - It returns 200 in the header, if the object is updated in the database.
-    - Check http://localhost:8081/h2/ and see the change in the chosen id.
-- Test DELETE
+It returns 200 in the header, if the object is updated in the database.
+Check http://localhost:8081/h2/ and see the change in the chosen id.
+- Test **DELETE**
   - Open the H2 database, and choose an id.
   - Go to the REST Client, select DELETE function and pass http://localhost:8081/movies/{id}
     - It returns 200 in the header, if the object is deleted in the database.
