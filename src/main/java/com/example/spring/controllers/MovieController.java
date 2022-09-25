@@ -35,8 +35,8 @@ public class MovieController {
 	 */
 	@GetMapping(path="{id}")
 	@ResponseBody
-	public Optional<Movie> getMovie(@PathVariable(name="id") Long id) {
-		return movieService.getMovie(id);
+	public Movie getMovie(@PathVariable(name="id") Long id) {
+		return movieService.getMovie(id); 
 	}
 	
 	@GetMapping(path="/list")
@@ -61,6 +61,12 @@ public class MovieController {
 	@ResponseBody
 	public void deleteMovie(@PathVariable(name="id") Long id) {
 		movieService.deleteMovie(id);
+	}
+	
+	@GetMapping(path="/details/{id}")
+	@ResponseBody
+	public Optional<Movie> getMovieDetails(@PathVariable(name="id") Long id) {
+		return movieService.getMovieDetails(id);
 	}
 
 	/*
@@ -90,9 +96,13 @@ public class MovieController {
 		return "listMovies";
 	}
 	
+	/*
+	 * The updateMovie method calls getMovieDetails from Service 
+	 * because it keeps the original reference to the object.
+	 */
 	@GetMapping(path="/update/{id}")
 	public String updateMovie(Model model, @PathVariable(value="id") Long id) {
-		model.addAttribute("movie", movieService.getMovie(id));
+		model.addAttribute("movie", movieService.getMovieDetails(id));
 		return "editMovie";
 	}
 	

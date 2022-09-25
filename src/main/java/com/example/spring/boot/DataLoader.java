@@ -48,7 +48,7 @@ public class DataLoader implements CommandLineRunner{
 			
 			Movie movie1 = new Movie();
 			movie1.setImagePath(getImagePath());
-			movie1.setTitle("Teste");
+			movie1.setTitle("Test");
 			movie1.setReleaseDate("10/10/10");
 			movie1.setVoteAverage(4.5);
 			movie1.setDetails(details1);
@@ -64,7 +64,7 @@ public class DataLoader implements CommandLineRunner{
 
 			Movie movie2 = new Movie();
 			movie2.setImagePath(getImagePath());
-			movie2.setTitle("Teste2");
+			movie2.setTitle("Test2");
 			movie2.setReleaseDate("11/11/11");
 			movie2.setVoteAverage(3.7);
 			movie2.setDetails(details2);
@@ -78,7 +78,7 @@ public class DataLoader implements CommandLineRunner{
 
 			Movie movie3 = new Movie();
 			movie3.setImagePath(getImagePath());
-			movie3.setTitle("Teste3");
+			movie3.setTitle("Test3");
 			movie3.setReleaseDate("22/22/22");
 			movie3.setVoteAverage(2.5);
 			movie3.setDetails(details3);

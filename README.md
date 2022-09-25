@@ -57,6 +57,7 @@ This application is based on: https://alison.com/topic/learn/134591/learning-ste
 
 Example:
 index.html
+
 ```HTML
 <!DOCTYPE html>
 <html>
@@ -72,6 +73,7 @@ index.html
 ```
 
 styles.css
+
 ```CSS
  @charset "ISO-8859-1";
 h1{
@@ -92,9 +94,11 @@ spring.datasource.username=sa //sa is the default user by convention
 
 Change the server port (localhost:8080 is already in use for web application).
 Example:
+
 ```
 server.port = 8081
 ```
+
 - After configuration in `application.properties`, run the application and access localhost:8081/h2
 - Check if `JDBC URL = jdbc:h2:file:~/Movies` (as stated in the application.properties)
 - According to the H2 Database: https://www.h2database.com/html/cheatSheet.html, `jdbc:h2:~/test` where 'test' in the user home directory
@@ -110,6 +114,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     
 }
 ```
+
 ## Populating the database
 - Create a new package (named `boot`) under the `java/spring` folder, and create a new class named `DataLoader`. This class is a Component - The spring component creates it as a Bean. This class will feed the database when it is empty to allow running the application.
   - DataLoader implements CommandLineRunner
@@ -136,21 +141,21 @@ public class DataLoader implements CommandLineRunner{
         
         if (movieRepository.count()<1) {
             Movie movie1 = new Movie();
-            movie1.setTitle("Teste");
+            movie1.setTitle("Test");
             movie1.setReleaseDate("10/10/10");
             movie1.setVoteAverage(4.5);
 
             movieRepository.save(movie1);
 
             Movie movie2 = new Movie();
-            movie2.setTitle("Teste2");
+            movie2.setTitle("Test2");
             movie2.setReleaseDate("11/11/11");
             movie2.setVoteAverage(3.7);
 
             movieRepository.save(movie2);
 
             Movie movie3 = new Movie();
-            movie3.setTitle("Teste3");
+            movie3.setTitle("Test3");
             movie3.setReleaseDate("22/22/22");
             movie3.setVoteAverage(2.5);
 
@@ -162,7 +167,7 @@ public class DataLoader implements CommandLineRunner{
 //                log.info("Movie found: " + movie.toString());
 //            }
 //
-//            List<Movie> moviesByTitle = movieRepository.findByTitle("Teste");
+//            List<Movie> moviesByTitle = movieRepository.findByTitle("Test");
 //
 //            for (Movie movie: moviesByTitle) {
 //                log.info("Movie found: " + movie.toString());
@@ -173,12 +178,14 @@ public class DataLoader implements CommandLineRunner{
     }
 }
 ```
+
 - Run application
 - To check working, access: http://localhost:8081/h2/
 - Press the button ‘stop’ before re-running the application to not get the “Database may be already in use” error.
 
 ### Creating custom queries in JpaRepository - named queries
 - Add methods in the MovieRepository interface:
+
 ```Java
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long>{
@@ -187,6 +194,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     List<Movie> findByTitle(String title);
 }
 ```
+
 - In the DataLoader class:
 
 ```Java
@@ -196,7 +204,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
                 log.info("Movie found: " + movie.toString());
             }
 
-            List<Movie> moviesByTitle = movieRepository.findByTitle("Teste");
+            List<Movie> moviesByTitle = movieRepository.findByTitle("Test");
 
             for (Movie movie: moviesByTitle) {
                 log.info("Movie found: " + movie.toString());
@@ -278,15 +286,15 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
 ## Testing application with the REST client
 - Use a rest client as RESTClient for Firefox, Postman, etc. (Postman is used)
 
-- Test **GET**
+### Test **GET**
   - Go to the REST Client select GET, and pass localhost:8081/movies/{id}
   - Where /movies/ is mapped in the @RequestMapping annotation in the Repository class as root path.
   - Example: localhost:8081/movies/270
   - The body should present the result of the GET method in a JSON format.
-
   - To get a code response, include *http:*//localhost:8081/movies/{id} (for Firefox client)
   - It returns 200 in the header, if the object exists.
-- Test **POST**
+
+### Test **POST**
   - Go to the REST Client, select POST and pass http://localhost:8081/movies/
   - In the Body, construct a JSON String for the object to be created - JSON (application/json) as Content-Type
   - Example: 
@@ -294,15 +302,15 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
 ```JSON
 {
     "imagePath":null,
-    "title" : "Lagoa Azul",
-    "releaseDate" : "1990",
-    "voteAverage" : 4.3
+    "title" : "Finding Nemo",
+    "releaseDate" : "2003",
+    "voteAverage" : 5.2
 }
 ```
 It returns 200 in the header, if the object is recorded in the database.
 Check http://localhost:8081/h2/ and see a new line in the table
 
-- Test **PUT**
+### Test **PUT**
   - Open the H2 database, and choose an id.
   - Go to the REST Client, select PUT function and pass http://localhost:8081/api/movies/{id}
   - Example: http://localhost:8081/movies/1
@@ -318,9 +326,11 @@ Check http://localhost:8081/h2/ and see a new line in the table
     "voteAverage" : 4.4
 }
 ```
+
 It returns 200 in the header, if the object is updated in the database.
 Check http://localhost:8081/h2/ and see the change in the chosen id.
-- Test **DELETE**
+
+### Test **DELETE**
   - Open the H2 database, and choose an id.
   - Go to the REST Client, select DELETE function and pass http://localhost:8081/movies/{id}
     - It returns 200 in the header, if the object is deleted in the database.
@@ -333,6 +343,7 @@ More about REST: https://www.javadevjournal.com/spring-boot/spring-boot-with-h2-
 - Create a new package named `advice` under the `controller` folder, and create a new class named `Advice` and use `@RestControllerAdvice` annotation.
 - Create a new package `dto` under the `controller` folder, and create a new class `MessageDto` (Data Transfer Object) to carry the messages in the application, which is a POJO (getters and setter).
 - The Advice class will handle the messages in the application through the MessageDto.
+
 ```Java
 @RestControllerAdvice
 public class Advice {
@@ -358,6 +369,7 @@ public class Advice {
     }
 }
 ```
+
 If the delete method has no internal treatment like:
 
 ```Java
@@ -380,9 +392,11 @@ A message error is given as response in the body (@ResponseBody), instead of a l
     "type": "NO SUCH ELEMENT ERROR"
 }
 ```
+
 ## Refactoring the REST api
 - Best practice: transactions separated from controllers.
 - Create a service package under the java directory and create a new MovieService class, which will handle the functionalities of the repository.
+
 ```Java
 @Service
 public class MovieService {
@@ -496,7 +510,7 @@ verify that you have the correct thymeleaf dependency within your pom.xml:
 Source: https://techhelpnotes.com/java-spring-boot-whitelabel-error-page-typenot-found-status404/
 
 ## Using bootstrap
-- Go to https://mvnrepository.com/ and search for Bootstrap, copy and paste de dependency in the pom.xml file.
+- Go to <https://mvnrepository.com/> and search for Bootstrap, copy and paste the dependency in the pom.xml file.
 
 ```XML
 <dependency>
@@ -517,6 +531,7 @@ Source: https://techhelpnotes.com/java-spring-boot-whitelabel-error-page-typenot
 - Attention to the project structure:
   - @SpringBootApplication in the level above @Controller 
 - Example:
+
 ```
 -com.example.spring
   --@SpringBootApplication 
@@ -603,13 +618,15 @@ public class MovieController {
 ## Spring Jackson Annotation
 - It is used to establish code conventions
 - Put the dependency in the pom.xml:
+
 ```XML
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-annotations</artifactId>
 </dependency>
 ```
-Source: https://github.com/FasterXML/jackson-annotations
+
+Source: <https://github.com/FasterXML/jackson-annotations>
 - Example: Instead of camelCase convention, use underscore convention
 
 ```Java
@@ -632,5 +649,97 @@ public class Movie {
     private Double voteAverage;
 }
 ```
+
 ## Lorem Picsum - The Lorem Ipsum for photos.
 - The DataLoader class contains a method to generate random pictures from https://picsum.photos/
+
+## One-to-one relationship
+Movie has a MovieDetail as one-to-one relationship.
+
+Movie:
+
+```Java
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor //for the call to super() constructor made by inheritance
+@Getter
+@Setter
+@ToString
+public class Movie {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	@JsonProperty("image_path")
+	private String imagePath;//image address
+	private String title;
+	@JsonProperty("release_date")
+	private String releaseDate;
+	@JsonProperty("vote_average")
+	private Double voteAverage;
+	@OneToOne(cascade = CascadeType.ALL) //if Movie is deleted, then its child details is also deleted
+	@JoinColumn(name = "movie_details_id", referencedColumnName = "id")
+	private MovieDetails details;
+}
+```
+
+MovieDetails:
+
+```Java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor 
+public class MovieDetails{
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	private String overview; //summary
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Genre.class)
+	@Column(name="genres")
+	private List<Genre> genres;
+
+//	For bidirectional relationship, uncomment and generate the database again.	
+//	@OneToOne(mappedBy = "details")
+//	private Movie movie;
+
+}
+```
+
+For unidirectional relationship Movie → MovieDetails, there's no need to have a property Movie in MovieDetails class.
+
+In this link: <https://www.baeldung.com/jpa-one-to-one> there's explanation of other strategies of one-to-one annotations.
+
+### '@Enumerated(EnumType.STRING) or @Enumerated(EnumType.ORDINAL)'
+@Enumerated(EnumType.STRING) = save the enum as String
+@Enumerated(EnumType.ORDINAL) = save the enum as the integer corresponding to enum's position
+
+## Using '@Builder' and '@JsonInclude'
+**Problem description**
+A service 'getMovie()' requires to return just the object’s attributes (and not the related objects). For example, Movie has 'Long id', 'String imagePath', 'String title', 'Double voteAverage' as class attributes, plus the 'details' attribute which is 'MovieDetails' type. Another 'service getMovieDetails()' requires to return all the object Movie attributes, including the details. How to deliver an object with different versions?
+
+**Solution**
+The class Movie gains the '@Builder' and '@JsonInclude(JsonInclude.Include.NON_NULL)' annotation.
+In the MovieService class, instead of method getMovie() returns just the object Movie from repository, it returns a copy of the object with the required attributes using the 'build()' method from @Builder pattern.
+
+```Java
+	public Movie getMovie(Long id) {
+		Optional<Movie> found = movieRepository.findById(id);
+		 Movie movie = found.get();
+         return Movie.builder()
+         		.id(movie.getId())
+         		.imagePath(movie.getImagePath())
+         		.title(movie.getTitle())
+         		.releaseDate(movie.getReleaseDate())
+         		.voteAverage(movie.getVoteAverage())
+         		.build();
+	}
+```
+However, this method return a Movie object with 'details' attribute = null, but the '@JsonInclude(JsonInclude.Include.NON_NULL)' prevents of returning null attributes.
+
+## 'orphanRemoval = true'
+
+'orphanRemoval' marks "child" entity to be removed when it's no longer referenced from the "parent" entity, e.g. when you remove the child entity from the corresponding collection of the parent entity.
+
+When updating Movie, a new MovieDetails is inserted and the old child is removed from the database.
+

@@ -10,8 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,18 +19,20 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor 
+@NoArgsConstructor
+@EqualsAndHashCode
 public class MovieDetails{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String overview; //summary
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Genre.class)
 	@Column(name="genres")
 	private List<Genre> genres;
-	
-	@OneToOne(mappedBy = "details")
-	private Movie movie;
+
+//	For bidirectional relationship, uncomment and generate the database again.
+//	@OneToOne(mappedBy = "details")
+//	private Movie movie;
 
 }
