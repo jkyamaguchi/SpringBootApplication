@@ -15,6 +15,8 @@ import com.example.spring.entities.Movie;
 import com.example.spring.entities.MovieDetails;
 import com.example.spring.repository.MovieRepository;
 
+import de.svenjacobs.loremipsum.LoremIpsum;
+
 @Component
 public class DataLoader implements CommandLineRunner{
 
@@ -34,6 +36,14 @@ public class DataLoader implements CommandLineRunner{
 		return path.toString();
 	}
 	
+	/*
+	 * Generates a Lorem ipsum text
+	 */
+	private String getOverview() {
+		LoremIpsum loremIpsum = new LoremIpsum();
+		return loremIpsum.getWords(10);
+	}
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -45,6 +55,7 @@ public class DataLoader implements CommandLineRunner{
 			
 			MovieDetails details1 = new MovieDetails();
 			details1.setGenres(list1);
+			details1.setOverview(getOverview());
 			
 			Movie movie1 = new Movie();
 			movie1.setImagePath(getImagePath());
@@ -61,7 +72,8 @@ public class DataLoader implements CommandLineRunner{
 			
 			MovieDetails details2 = new MovieDetails();
 			details2.setGenres(list2);
-
+			details2.setOverview(getOverview());
+			
 			Movie movie2 = new Movie();
 			movie2.setImagePath(getImagePath());
 			movie2.setTitle("Test2");
@@ -75,7 +87,8 @@ public class DataLoader implements CommandLineRunner{
 			
 			MovieDetails details3 = new MovieDetails();
 			details3.setGenres(list3);
-
+			details3.setOverview(getOverview());
+			
 			Movie movie3 = new Movie();
 			movie3.setImagePath(getImagePath());
 			movie3.setTitle("Test3");

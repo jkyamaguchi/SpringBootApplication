@@ -710,17 +710,17 @@ For unidirectional relationship Movie → MovieDetails, there's no need to have 
 
 In this link: <https://www.baeldung.com/jpa-one-to-one> there's explanation of other strategies of one-to-one annotations.
 
-### '@Enumerated(EnumType.STRING) or @Enumerated(EnumType.ORDINAL)'
-@Enumerated(EnumType.STRING) = save the enum as String
-@Enumerated(EnumType.ORDINAL) = save the enum as the integer corresponding to enum's position
+### `@Enumerated(EnumType.STRING)` or `@Enumerated(EnumType.ORDINAL)`
+`@Enumerated(EnumType.STRING)` = save the enum as String
+`@Enumerated(EnumType.ORDINAL)` = save the enum as the integer corresponding to enum's position
 
-## Using '@Builder' and '@JsonInclude'
+## Using `@Builder` and `@JsonInclude`
 **Problem description**
-A service 'getMovie()' requires to return just the object’s attributes (and not the related objects). For example, Movie has 'Long id', 'String imagePath', 'String title', 'Double voteAverage' as class attributes, plus the 'details' attribute which is 'MovieDetails' type. Another 'service getMovieDetails()' requires to return all the object Movie attributes, including the details. How to deliver an object with different versions?
+A service `getMovie()` requires to return just the object’s attributes (and not the related objects). For example, Movie has `Long id`, `String imagePath`, `String title`, `Double voteAverage` as class attributes, plus the `details` attribute which is `MovieDetails` type. Another service `getMovieDetails()` requires to return all the object Movie attributes, including the details. How to deliver an object with different versions?
 
 **Solution**
-The class Movie gains the '@Builder' and '@JsonInclude(JsonInclude.Include.NON_NULL)' annotation.
-In the MovieService class, instead of method getMovie() returns just the object Movie from repository, it returns a copy of the object with the required attributes using the 'build()' method from @Builder pattern.
+The class Movie gains the `@Builder` and `@JsonInclude(JsonInclude.Include.NON_NULL)` annotation.
+In the MovieService class, instead of method `getMovie()` returns just the object Movie from repository, it returns a copy of the object with the required attributes using the `build()` method from @Builder pattern.
 
 ```Java
 	public Movie getMovie(Long id) {
@@ -735,11 +735,15 @@ In the MovieService class, instead of method getMovie() returns just the object 
          		.build();
 	}
 ```
-However, this method return a Movie object with 'details' attribute = null, but the '@JsonInclude(JsonInclude.Include.NON_NULL)' prevents of returning null attributes.
+However, this method return a Movie object with `details` attribute = null, but the `@JsonInclude(JsonInclude.Include.NON_NULL)` prevents of returning null attributes.
 
-## 'orphanRemoval = true'
+## `orphanRemoval = true`
 
-'orphanRemoval' marks "child" entity to be removed when it's no longer referenced from the "parent" entity, e.g. when you remove the child entity from the corresponding collection of the parent entity.
+`orphanRemoval` marks "child" entity to be removed when it's no longer referenced from the "parent" entity, e.g. when you remove the child entity from the corresponding collection of the parent entity.
 
 When updating Movie, a new MovieDetails is inserted and the old child is removed from the database.
+
+## Lorem ipsum for Java
+https://loremipsum.sourceforge.net/
+Maven repository: https://mvnrepository.com/artifact/de.sven-jacobs/loremipsum/1.0
 
